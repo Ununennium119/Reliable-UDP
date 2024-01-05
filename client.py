@@ -38,6 +38,11 @@ class Client:
 
     def _listen(self):
         while True:
+            if self.listen_seq_number == self.data_count:
+                output = open('output.txt', 'w')
+                output.write('\n'.join(self.listen_data))
+                break
+
             data, addr = self.listen_socket.recvfrom(1024)
             is_ack = bool(data[0])
             seq_number = int.from_bytes(data[1:5], 'big')
@@ -69,11 +74,6 @@ class Client:
                 self.send_socket.sendto(ack, addr)
 
                 self.listen_seq_number += 1
-
-                if self.listen_seq_number == self.data_count:
-                    output = open('output.txt', 'w')
-                    output.write('\n'.join(self.listen_data))
-                    break
 
 
 if __name__ == '__main__':

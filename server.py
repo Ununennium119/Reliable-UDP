@@ -74,7 +74,6 @@ class Application:
                 if current_seq_number - 1 >= len(self.send_data):
                     time.sleep(1)
                     if self.send_current_seq_number - 1 >= len(self.send_data):
-                        print('FINISH SENDING')
                         break
                     continue
 
